@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../Context/UserContext';
 
-const Payments = ({ user }) => {
+const Payments = () => {
   const [payments, setPayments] = useState([]);
   const [error, setError] = useState(null);
+// console.log(user);
+const {user} =useAuth()
 console.log(user);
 
+const fetchPayments = async () => {
+  
+  try {
+    if(user!='undefined'){
+      const response = await axios.get(`http://localhost:5000/api/payments/user/${ user._id}`);
+      setPayments(response.data);
+    }
+  } catch (err) {
+    setError('Failed to fetch payments');
+    console.error(err);
+  }
+};
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/payments/user/${user._id}`);
-        setPayments(response.data);
-      } catch (err) {
-        setError('Failed to fetch payments');
-        console.error(err);
-      }
-    };
 
     fetchPayments();
   }, [user]);

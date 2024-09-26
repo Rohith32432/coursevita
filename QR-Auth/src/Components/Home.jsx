@@ -3,32 +3,17 @@ import QR from './QR';
 import axios from 'axios';
 import QrScanner from './Test';
 import Orders from './Orders';
+import { useAuth } from '../Context/UserContext';
 function Home() {
   const [status, setStatus] = useState(false);
-  const [user, setuser] = useState({});
-  const token = localStorage.getItem('hack') || '';
+ 
+    const {user} =useAuth()
+    useEffect(()=>{
+  if(user) setStatus(true)
 
-  const authorize = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/user/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response);
-      
-      if(response.status==200) setStatus(true)
-        setuser(response.data)
-    } catch (error) {
-      console.error('Authorization error:', error);
-      setStatus(false);  
-    }
-  };
-
-  useEffect(() => {
-    authorize();
-  }, []);
-
+  },[])
+  
+ 
   return (
     <>
       <h1>Home</h1>
@@ -38,9 +23,9 @@ function Home() {
         <h2> HI - {user?.username}</h2>
         <h2>{user?.email}</h2>
         {/* <QR /> */}
-        <QrScanner user={user}/>
-
-        <Orders user={user}/>
+        <QrScanner  />
+        <Orders/>
+  
       </div>
       
       :
