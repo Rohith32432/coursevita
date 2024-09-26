@@ -15,9 +15,9 @@ app.use('/api/payments', router);
 main().catch(err => console.log(err));
 
 async function main() {
-    let pwd = process.env.db_pwd;
+    let mongo_url = process.env.mongo_url;
 
-    await mongoose.connect(`mongodb://127.0.0.1:27017/hackton`);
+    await mongoose.connect(mongo_url);
     console.log('DB Connected successfully');
 }
 

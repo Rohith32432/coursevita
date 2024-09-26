@@ -1,20 +1,20 @@
 const Payment = require('../model/PaymentModel');
 
 // Create a new payment
-exports.createPayment = async (req, res) => {
+const createPayment = async (req, res) => {
     try {
         // console.log(req.body);
-        
-        const { userId, amount, paymentMethod } = req.body;
- 
+
+        const { userId, amount, currency } = req.body;
+
 
         const newPayment = new Payment({
             userId,
             amount,
-            currency:'inr',
-            paymentMethod,
+            currency ,
+            paymentMethod:'upi',
             transactionId: Date.now(),
-            status: 'pending' // Initial status
+            status: 'done ✔️'  
         });
 
         await newPayment.save();
@@ -26,7 +26,7 @@ exports.createPayment = async (req, res) => {
 };
 
 // Get all payments for a user
-exports.getUserPayments = async (req, res) => {
+const getUserPayments = async (req, res) => {
     try {
         const { userId } = req.params;
         const payments = await Payment.find({ userId });
@@ -38,7 +38,7 @@ exports.getUserPayments = async (req, res) => {
 };
 
 // Get a specific payment by ID
-exports.getPaymentById = async (req, res) => {
+const getPaymentById = async (req, res) => {
     try {
         const { id } = req.params;
         const payment = await Payment.findById(id);
@@ -51,7 +51,7 @@ exports.getPaymentById = async (req, res) => {
 };
 
 // Update payment status
-exports.updatePaymentStatus = async (req, res) => {
+const updatePaymentStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -64,3 +64,10 @@ exports.updatePaymentStatus = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+const start = async (req, res) => {
+    const { userid, name } = req.body
+    const str=Math.random().toString(36).substring(2, 100);
+    res.status(200).json(str)
+
+}
+module.exports = { start, updatePaymentStatus, getPaymentById, getUserPayments, createPayment }

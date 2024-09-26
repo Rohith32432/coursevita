@@ -1,36 +1,39 @@
 import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext(null);
 
 function UserProvider({ children }) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
     // console.log(token);
+    const navigate=useNavigate()
     
-    async function  authorize() {
+    
+    useEffect(()=>{
+      // console.log(token);
       const token = localStorage.getItem('hack') || '';
-        try {
-          const response = await axios.get('http://localhost:5000/api/user/me', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          console.log(response);
+        async function  authorize() {
+          try {
+            const response = await axios.get('http://localhost:5000/api/user/me', {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
           
-          if(response.status==200) {
-            setUser(response.data)
-            console.log(response);
             
+            if(response.status==200) {
+              setUser(response.data)
+              // console.log(response);
+              
+            }
+          } catch (error) {
+            console.error('Authorization error:', error);
+             
           }
-        } catch (error) {
-          console.error('Authorization error:', error);
-           
-        }
-      };
-      
-      useEffect(()=>{
+        };
         authorize()
-      },[])
+      },[navigate])
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

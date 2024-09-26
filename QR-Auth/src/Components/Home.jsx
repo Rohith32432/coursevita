@@ -1,37 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import QR from './QR';
-import axios from 'axios';
 import QrScanner from './Test';
 import Orders from './Orders';
 import { useAuth } from '../Context/UserContext';
+
 function Home() {
-  const [status, setStatus] = useState(false);
- 
-    const {user} =useAuth()
-    useEffect(()=>{
-  if(user) setStatus(true)
+  const { user } = useAuth();
 
-  },[])
-  
- 
   return (
-    <>
-      <h1>Home</h1>
-      {status ?
-      <div>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="bg-white shadow-md rounded-lg p-8 max-w-lg w-full text-center">
+        <h1 className="text-3xl font-bold mb-6 text-blue-600">Home</h1>
 
-        <h2> HI - {user?.username}</h2>
-        <h2>{user?.email}</h2>
-        {/* <QR /> */}
-        <QrScanner  />
-        <Orders/>
-  
+        {user ? (
+          <div className="space-y-4">
+            <h2 className="text-xl text-gray-800 font-semibold">Hi, {user?.username} 👋</h2>
+            <h2 className="text-lg text-gray-600">{user?.email}</h2>
+
+            {/* QR Scanner Component */}
+            <div className="mt-6">
+              <QrScanner />
+            </div>
+          </div>
+        ) : (
+          <h2 className="text-xl text-red-500 font-semibold">Please login to continue.</h2>
+        )}
       </div>
-      
-      :
-      <h2>please Login</h2>
-      }
-    </>
+    </div>
   );
 }
 

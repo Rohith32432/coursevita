@@ -3,7 +3,8 @@ const router = express.Router();
 const paymentController = require('../controller/paymentController');
 
 // Create a new payment
-router.post('/', paymentController.createPayment);
+router.post('/create', paymentController.createPayment);
+router.get('/', paymentController.start);
 
 // Get all payments for a user
 router.get('/user/:userId', paymentController.getUserPayments);

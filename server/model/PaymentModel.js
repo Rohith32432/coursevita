@@ -7,7 +7,7 @@ const paymentSchema = new mongoose.Schema({
     currency: { type: String, required: true, default: 'USD' },
     paymentMethod: { type: String, required: true},
     transactionId: { type: String, required: true, unique: true },
-    status: { type: String, required: true, enum: ['pending', 'completed', 'failed'], default: 'pending' },
+    status: { type: String, required: true, default: 'pending' },
 }, { timestamps: true });
 
 // Export the Payment model
