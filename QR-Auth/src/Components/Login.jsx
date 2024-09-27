@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
-
+  const [message, setMessage] = useState('');
   async function handleLogin(e) {
     e.preventDefault();
     const fdata = new FormData(e.target);
@@ -21,10 +21,11 @@ function Login() {
       
       if (res.status === 200) {
         localStorage.setItem('hack', res.data.token);
-        navigate('/home');
+        navigate('/');
       }
     } catch (err) {
       console.error('Login failed:', err);
+      setMessage(err.response.statusText)
     }
   }
 
@@ -35,7 +36,7 @@ function Login() {
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
+              Email
             </label>
             <input
               type="email"
@@ -67,6 +68,11 @@ function Login() {
               Login
             </button>
           </div>
+          {message && (
+          <div className="mt-4 text-center text-red-500 font-bold">
+            {message}
+          </div>
+        )}
         </form>
       </div>
     </div>

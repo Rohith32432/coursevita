@@ -11,7 +11,7 @@ const createPayment = async (req, res) => {
         const newPayment = new Payment({
             userId,
             amount,
-            currency ,
+            currency:currency ,
             paymentMethod:'upi',
             transactionId: Date.now(),
             status: 'done ✔️'  
@@ -30,6 +30,8 @@ const getUserPayments = async (req, res) => {
     try {
         const { userId } = req.params;
         const payments = await Payment.find({ userId });
+        // console.log(payments);
+        
         res.status(200).json(payments);
     } catch (error) {
         console.error('Error retrieving user payments:', error); // Log error for debugging
@@ -42,6 +44,8 @@ const getPaymentById = async (req, res) => {
     try {
         const { id } = req.params;
         const payment = await Payment.findById(id);
+        // console.log(payment);
+        
         if (!payment) return res.status(404).json({ error: 'Payment not found' });
         res.status(200).json(payment);
     } catch (error) {

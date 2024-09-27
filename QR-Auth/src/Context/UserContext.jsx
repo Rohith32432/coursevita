@@ -6,26 +6,26 @@ const UserContext = createContext(null);
 
 function UserProvider({ children }) {
     const [user, setUser] = useState();
-    // console.log(token);
+
     const navigate=useNavigate()
     
     
     useEffect(()=>{
-      // console.log(token);
       const token = localStorage.getItem('hack') || '';
         async function  authorize() {
           try {
-            const response = await axios.get('http://localhost:5000/api/user/me', {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-          
-            
-            if(response.status==200) {
-              setUser(response.data)
-              // console.log(response);
+            if(token){
               
+              const response = await axios.get('http://localhost:5000/api/user/me', {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              
+              
+              if(response.status==200) {
+                setUser(response.data)
+              }
             }
           } catch (error) {
             console.error('Authorization error:', error);

@@ -39,7 +39,11 @@ const App = () => {
       console.log('API Response:', response);
  
       if (response.status === 200) {
-        navigate('/payment');
+        // const jdata=JSON.stringify(data)
+        if(data!=='No result')
+          window.location.href=`/payment?data=${JSON.stringify(data)}`;
+        
+        
       }
     } catch (err) {
       console.error('Error sending data to API:', err);
