@@ -11,11 +11,12 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
-    "modern-react-qr-reader": "^1.0.12",
+  
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-qr-reader": "^3.0.0-beta-1",
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
